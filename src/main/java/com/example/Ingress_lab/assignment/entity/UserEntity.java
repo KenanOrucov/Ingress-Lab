@@ -1,9 +1,9 @@
-package com.example.Ingress_lab.entity;
+package com.example.Ingress_lab.assignment.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -11,8 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserEntity {
-    Long id;
+    String id;
     String name;
-    String email;
-    List<Long> luckyNumbers;
+    Integer age;
 }
+
