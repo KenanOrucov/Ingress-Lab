@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: Ingress-lab
+server:
+  port: 8080
