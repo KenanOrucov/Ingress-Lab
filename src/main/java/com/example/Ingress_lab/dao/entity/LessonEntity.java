@@ -6,12 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.util.Objects;
 
@@ -22,6 +17,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Builder
 @Entity
 @Table(name = "lessons")
@@ -47,4 +43,5 @@ public class LessonEntity {
     public int hashCode() {
         return Objects.hash(id);
     }
+
 }

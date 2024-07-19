@@ -8,9 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component
 public enum Mapper {
-
     LESSON_MAPPER;
 
     public LessonEntity toLessonEntity(LessonRequest request) {

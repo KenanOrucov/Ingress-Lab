@@ -6,6 +6,7 @@ import com.example.Ingress_lab.model.enums.LessonStatus;
 import com.example.Ingress_lab.model.request.LessonRequest;
 import com.example.Ingress_lab.model.response.LessonResponse;
 import com.example.Ingress_lab.service.abstraction.LessonService;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 import static com.example.Ingress_lab.mapper.Mapper.LESSON_MAPPER;
 import static com.example.Ingress_lab.model.enums.LessonStatus.DELETED;
+import static com.example.Ingress_lab.model.enums.LessonStatus.NEW;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +57,30 @@ public class LessonServiceHandler implements LessonService {
         var lesson = fetchLessonIfExist(id);
         lesson.setStatus(DELETED);
         lessonRepository.save(lesson);
+    }
+
+    @PostConstruct
+    public void test(){
+        var lessons = lessonRepository.getGreaterThanTwo();
+        lessons.forEach(
+                System.out::println
+        );
+    }
+
+    @PostConstruct
+    public void test2(){
+        var lessons = lessonRepository.getWithStudentCount(14L);
+        lessons.forEach(
+                System.out::println
+        );
+    }
+
+    @PostConstruct
+    public void test3(){
+        var lessons = lessonRepository.getWithLessonStatus(NEW);
+        lessons.forEach(
+                System.out::println
+        );
     }
 
     private LessonEntity fetchLessonIfExist(Long id) {

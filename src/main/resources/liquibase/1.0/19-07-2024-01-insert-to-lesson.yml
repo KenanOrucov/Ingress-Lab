@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 19-07-2024-03-alter-lesson
+      author: Kanan Orujov
+      changes:
+        - addNotNullConstraint:
+            tableName: lessons
+            columnName: name
+            columnDataType: varchar(256)
