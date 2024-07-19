@@ -1,7 +1,12 @@
 package com.example.Ingress_lab.dao.repository;
 
 import com.example.Ingress_lab.dao.entity.LessonEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface LessonRepository  extends JpaRepository<LessonEntity, Long> {
+import java.util.List;
+
+public interface LessonRepository  extends CrudRepository<LessonEntity, Long> {
+
+    @Override
+    List<LessonEntity> findAll();
 }
