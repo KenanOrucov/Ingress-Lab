@@ -1,68 +1,45 @@
 package com.example.Ingress_lab.mapper;
 
-import com.example.Ingress_lab.dao.entity.LessonEntity;
-import com.example.Ingress_lab.model.enums.LessonStatus;
-import com.example.Ingress_lab.model.request.LessonRequest;
-import com.example.Ingress_lab.model.response.LessonResponse;
-import org.springframework.stereotype.Component;
+import com.example.Ingress_lab.dao.entity.CardEntity;
+import com.example.Ingress_lab.model.enums.CardStatus;
+import com.example.Ingress_lab.model.request.CardRequest;
+import com.example.Ingress_lab.model.response.CardResponse;
 
 import java.util.List;
 
+
 public enum Mapper {
-    LESSON_MAPPER;
+    CARD_MAPPER;
 
-    public LessonEntity toLessonEntity(LessonRequest request) {
-        if (request == null) {
-            return null;
-        }
-
-        return LessonEntity.builder()
-                .name(request.getName())
-                .hours(request.getHours())
-                .studentCount(request.getStudentCount())
-                .status(LessonStatus.NEW)
+    public CardEntity toCardEntity(CardRequest request) {
+        return CardEntity.builder()
+                .userName(request.getUserName())
+                .amount(request.getAmount())
+                .status(CardStatus.ACTIVE)
                 .build();
     }
 
-    public LessonResponse toLessonResponse(LessonEntity entity) {
-        if (entity == null) {
-            return null;
-        }
-
-        return LessonResponse.builder()
+    public CardResponse toCardResponse(CardEntity entity) {
+        return CardResponse.builder()
                 .id(entity.getId())
-                .name(entity.getName())
-                .hours(entity.getHours())
-                .studentCount(entity.getStudentCount())
+                .userName(entity.getUserName())
+                .cardNumber(entity.getCardNumber())
+                .amount(entity.getAmount())
                 .status(entity.getStatus())
                 .build();
     }
 
-    public List<LessonResponse> toLessonResponses(List<LessonEntity> entities) {
-        if (entities == null) {
-            return null;
-        }
-
-        return entities.stream()
-                .map(this::toLessonResponse)
+    public List<CardResponse> toCardResponses(List<CardEntity> entities) {
+        return entities
+                .stream()
+                .map(this::toCardResponse)
                 .toList();
     }
 
-    public LessonEntity updateLesson(LessonEntity entity, LessonRequest request) {
-        if (request == null || entity == null) {
-            return null;
-        }
-        entity.setName(request.getName());
-        entity.setHours(request.getHours());
-        entity.setStudentCount(request.getStudentCount());
-        return entity;
-    }
-
-    public LessonEntity updateLessonStatus(LessonEntity entity, LessonStatus status) {
-        if (entity == null) {
-            return null;
-        }
-        entity.setStatus(status);
+    public CardEntity updateCard(CardEntity entity, CardRequest request) {
+        entity.setUserName(request.getUserName());
+        entity.setAmount(request.getAmount());
         return entity;
     }
 }
+

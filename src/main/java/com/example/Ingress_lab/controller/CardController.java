@@ -1,9 +1,9 @@
 package com.example.Ingress_lab.controller;
 
-import com.example.Ingress_lab.model.enums.LessonStatus;
-import com.example.Ingress_lab.model.request.LessonRequest;
-import com.example.Ingress_lab.model.response.LessonResponse;
-import com.example.Ingress_lab.service.abstraction.LessonService;
+import com.example.Ingress_lab.model.enums.CardStatus;
+import com.example.Ingress_lab.model.request.CardRequest;
+import com.example.Ingress_lab.model.response.CardResponse;
+import com.example.Ingress_lab.service.abstraction.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,41 +24,36 @@ import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/v1/lessons")
-public class LessonController {
-    private final LessonService lessonService;
+@RequestMapping("/v1/cards")
+public class CardController {
+    private final CardService cardService;
 
     @GetMapping
-    public List<LessonResponse> getAllLessons() {
-        return lessonService.getAllLessons();
+    public List<CardResponse> getAllCards() {
+        return cardService.getAllCards();
     }
 
     @GetMapping("/{id}")
-    public LessonResponse getLessonById(@PathVariable Long id) {
-        return lessonService.getLessonById(id);
+    public CardResponse getCardById(@PathVariable Long id) {
+        return cardService.getCardById(id);
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public void createLesson(@RequestBody LessonRequest request) {
-        lessonService.createLesson(request);
+    public void createCard(@RequestBody CardRequest request) {
+        cardService.createCard(request);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void updateLesson(@PathVariable Long id, @RequestBody LessonRequest request) {
-        lessonService.updateLesson(id, request);
+    public void updateCard(@PathVariable Long id, @RequestBody CardRequest request) {
+        cardService.updateCard(id, request);
     }
 
-    @PatchMapping("/{id}")
-    @ResponseStatus(NO_CONTENT)
-    public void updateLessonStatus(@PathVariable Long id, @RequestParam LessonStatus status) {
-        lessonService.updateLessonStatus(id, status);
-    }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(NO_CONTENT)
-    public void deleteLessonById(@PathVariable Long id) {
-        lessonService.deleteLessonById(id);
+    public void deleteCardById(@PathVariable Long id) {
+        cardService.deleteCardById(id);
     }
 }

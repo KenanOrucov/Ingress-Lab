@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LessonRequest {
-    private String name;
-    private Integer hours;
-    private Integer studentCount;
+public class CardRequest {
+    private String userName;
+    private Double amount;
 }

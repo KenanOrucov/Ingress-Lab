@@ -1,8 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: 19-07-2024-02-delete-from-lesson
-      author: Kanan Orujov
-      changes:
-        delete:
-          tableName: lessons
-          where: "id = 19"
