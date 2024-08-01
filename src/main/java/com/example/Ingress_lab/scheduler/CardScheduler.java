@@ -16,4 +16,11 @@ public class CardScheduler {
     public void updateCardAmount() {
         cardService.updateCardAmount();
     }
+
+
+    @Scheduled(fixedDelayString = "PT1H")
+    @SchedulerLock(name = "updateCardAmountTwo", lockAtLeastForString = "PT1H", lockAtMostForString = "PT3H")
+    public void updateCardAmountTwo() {
+        cardService.updateCardAmount();
+    }
 }
