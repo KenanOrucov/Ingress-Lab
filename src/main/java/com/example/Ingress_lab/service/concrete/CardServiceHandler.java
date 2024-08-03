@@ -3,11 +3,18 @@ package com.example.Ingress_lab.service.concrete;
 import com.example.Ingress_lab.dao.entity.CardEntity;
 import com.example.Ingress_lab.dao.repository.CardRepository;
 import com.example.Ingress_lab.exception.NotFoundException;
+import com.example.Ingress_lab.model.criteria.CardCriteria;
+import com.example.Ingress_lab.model.criteria.PageCriteria;
 import com.example.Ingress_lab.model.request.CardRequest;
 import com.example.Ingress_lab.model.response.CardResponse;
+import com.example.Ingress_lab.model.response.PageableCardResponse;
 import com.example.Ingress_lab.service.abstraction.CardService;
+import com.example.Ingress_lab.service.specification.CardSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -43,10 +50,13 @@ public class CardServiceHandler implements CardService {
     }
 
     @Override
-    public List<CardResponse> getAllCards() {
+    public PageableCardResponse getAllCards(PageCriteria pageCriteria, CardCriteria cardCriteria) {
         log.info("ActionLog.getAllCards.start");
-        return CARD_MAPPER
-                .toCardResponses(cardRepository.findAll());
+        Page<CardEntity> cards = cardRepository.findAll(
+                new CardSpecification(cardCriteria),
+                PageRequest.of(pageCriteria.getPage(), pageCriteria.getCount(), Sort.by("id").descending()));
+
+        return CARD_MAPPER.mapToPageableResponse(cards);
     }
 
     @Override

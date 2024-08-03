@@ -1,8 +1,11 @@
 package com.example.Ingress_lab.controller;
 
+import com.example.Ingress_lab.model.criteria.CardCriteria;
+import com.example.Ingress_lab.model.criteria.PageCriteria;
 import com.example.Ingress_lab.model.enums.CardStatus;
 import com.example.Ingress_lab.model.request.CardRequest;
 import com.example.Ingress_lab.model.response.CardResponse;
+import com.example.Ingress_lab.model.response.PageableCardResponse;
 import com.example.Ingress_lab.service.abstraction.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,8 +32,9 @@ public class CardController {
     private final CardService cardService;
 
     @GetMapping
-    public List<CardResponse> getAllCards() {
-        return cardService.getAllCards();
+    PageableCardResponse getAllCards(PageCriteria pageCriteria,
+                                     CardCriteria cardCriteria) {
+        return cardService.getAllCards(pageCriteria, cardCriteria);
     }
 
     @GetMapping("/{id}")
