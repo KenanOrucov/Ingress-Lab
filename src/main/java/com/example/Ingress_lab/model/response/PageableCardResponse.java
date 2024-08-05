@@ -11,8 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PageableCardResponse {
-    private List<CardResponse> cards;
+public class PageableCardResponse<T> {
+    private List<T> content;
     private int lastPageNumber;
     private long totalElements;
     private boolean hasNextPage;

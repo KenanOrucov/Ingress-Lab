@@ -8,6 +8,8 @@ import com.example.Ingress_lab.model.response.CardResponse;
 import com.example.Ingress_lab.model.response.PageableCardResponse;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -19,6 +21,8 @@ public enum Mapper {
                 .userName(request.getUserName())
                 .amount(request.getAmount())
                 .status(CardStatus.ACTIVE)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
     }
 
@@ -29,6 +33,8 @@ public enum Mapper {
                 .cardNumber(entity.getCardNumber())
                 .amount(entity.getAmount())
                 .status(entity.getStatus())
+                .createdAt(entity.getCreatedAt())
+                .updatedAt(entity.getUpdatedAt())
                 .build();
     }
 
@@ -42,13 +48,14 @@ public enum Mapper {
     public CardEntity updateCard(CardEntity entity, CardRequest request) {
         entity.setUserName(request.getUserName());
         entity.setAmount(request.getAmount());
+        entity.setUpdatedAt(LocalDateTime.now());
         return entity;
     }
 
     public PageableCardResponse mapToPageableResponse(Page<CardEntity> entities) {
         return PageableCardResponse
                 .builder()
-                .cards(entities.map(this::toCardResponse).stream().toList())
+                .content(Collections.singletonList(entities.map(this::toCardResponse).stream().toList()))
                 .totalElements(entities.getTotalElements())
                 .hasNextPage(entities.hasNext())
                 .lastPageNumber(entities.getTotalPages())

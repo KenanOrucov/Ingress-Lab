@@ -6,9 +6,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Builder;
+import lombok.experimental.FieldNameConstants;
 
+
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import static jakarta.persistence.EnumType.STRING;
@@ -18,8 +26,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
+@FieldNameConstants
 @Entity
 @Table(name = "cards")
 public class CardEntity {
@@ -27,10 +35,12 @@ public class CardEntity {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String userName;
-    private Double amount;
+    private BigDecimal amount;
     private BigInteger cardNumber;
     @Enumerated(STRING)
     private CardStatus status;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     @Override
     public boolean equals(Object o) {

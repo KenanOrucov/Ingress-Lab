@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Random;
@@ -80,7 +81,7 @@ public class CardServiceHandler implements CardService {
     public void updateCardAmount() {
         log.info("ActionLog.updateCardAmount.start");
         var cards = cardRepository.findByStatus(ACTIVE);
-        cards.forEach(card -> card.setAmount(card.getAmount() * 1.05));
+        cards.forEach(card -> card.setAmount(card.getAmount().multiply(BigDecimal.valueOf(1.05))));
         cardRepository.saveAll(cards);
         log.info("ActionLog.updateCardAmount.cards: {}", cards);
         log.info("ActionLog.updateCardAmount.success");
