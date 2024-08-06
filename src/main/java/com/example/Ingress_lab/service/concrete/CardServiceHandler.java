@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Random;
 
 import static com.example.Ingress_lab.mapper.Mapper.CARD_MAPPER;
@@ -32,6 +31,82 @@ import static com.example.Ingress_lab.model.enums.ExceptionConstants.CARD_NOT_FO
 @RequiredArgsConstructor
 public class CardServiceHandler implements CardService {
     private final CardRepository cardRepository;
+    private final TransactionalCardServiceHandler transactionalCardServiceHandler;
+
+    // CASE ONE
+
+//    @Transactional(rollbackFor = ClassNotFoundException.class)
+//    @Override
+//    public void createCard(CardRequest request) throws ClassNotFoundException {
+//        log.info("ActionLog.createCard.start request: {}", request);
+//        var card = CARD_MAPPER.toCardEntity(request);
+//        card.setCardNumber(generateCardNumber());
+//        log.info("ActionLog.createCard.success card: {}", card);
+//        cardRepository.save(card);
+//        throw new ClassNotFoundException("test");
+//    }
+
+
+    // CASE TWO
+
+//    @Transactional
+//    @SneakyThrows  // for SneakyThrows Transactional works correctly (with test())
+//    @Override
+//    public void createCard(CardRequest request){
+//        log.info("ActionLog.createCard.start request: {}", request);
+//        var card = CARD_MAPPER.toCardEntity(request);
+//        card.setCardNumber(generateCardNumber());
+//        log.info("ActionLog.createCard.success card: {}", card);
+//        cardRepository.save(card);
+//        throw new ClassNotFoundException("test");
+//    }
+
+
+//  CASE THREE
+
+//    @Override
+//    public void createCard(CardRequest request) {
+//        log.info("ActionLog.createCard.start request: {}", request);
+//        var card = CARD_MAPPER.toCardEntity(request);
+//        card.setCardNumber(generateCardNumber());
+//        log.info("ActionLog.createCard.success card: {}", card);
+//        saveCard(card);
+//    }
+//
+//    @Transactional
+//    public void saveCard(CardEntity card) {
+//        cardRepository.save(card);
+//        throw new RuntimeException("test");
+//    }
+
+
+//    CASE FOUR  (separate Transactional)
+
+//        @Transactional
+//        @Override
+//    public void createCard(CardRequest request) {
+//        log.info("ActionLog.createCard.start request: {}", request);
+//        var card = CARD_MAPPER.toCardEntity(request);
+//        card.setCardNumber(generateCardNumber());
+//        log.info("ActionLog.createCard.success card: {}", card);
+//        saveCard(card);
+//    }
+//
+//    @Transactional(propagation = Propagation.REQUIRES_NEW)
+//    public void saveCard(CardEntity card) {
+//        cardRepository.save(card);
+//        throw new RuntimeException("test");
+//    }
+
+
+//    CASE FIVE
+
+//    @Override
+//    public void createCard(CardRequest request) {
+//        log.info("ActionLog.createCard.start request: {}", request);
+//        transactionalCardServiceHandler.createCard(request);
+//    }
+
 
     @Override
     public void createCard(CardRequest request) {
@@ -87,6 +162,8 @@ public class CardServiceHandler implements CardService {
         log.info("ActionLog.updateCardAmount.success");
     }
 
+
+
     private CardEntity fetchCardIfExist(Long id) {
         return cardRepository
                 .findById(id)
@@ -104,4 +181,5 @@ public class CardServiceHandler implements CardService {
 
         return new BigInteger(cardNumber.toString());
     }
+
 }
