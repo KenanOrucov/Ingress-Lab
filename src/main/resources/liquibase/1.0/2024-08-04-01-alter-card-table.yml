@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2024-08-04-01-alter-card-table
+      author: Kanan Orujov
+      changes:
+        - addColumn:
+            tableName: cards
+            columns:
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false

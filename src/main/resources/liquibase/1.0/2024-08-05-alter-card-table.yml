@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2024-08-05-alter-card-table
+      author: Kanan Orujov
+      changes:
+        - modifyDataType:
+            tableName: cards
+            columnName: card_number
+            newDataType: VARCHAR(16)
