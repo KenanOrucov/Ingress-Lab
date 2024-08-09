@@ -15,7 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -48,6 +50,36 @@ public class CardServiceHandler implements CardService {
         var card = fetchCardIfExist(id);
         log.info("ActionLog.getCardById.success id: {}", id);
         return CARD_MAPPER.toCardResponse(card);
+    }
+
+    @Async
+    @Override
+    public void test(){
+        log.info("ActionLog.test.start");
+        try {
+            Thread.sleep(3000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        log.info("ActionLog.test.success");
+    }
+
+    @Transactional
+    @Override
+    public void updateCardAmountTest(Long id) {
+        log.info("ActionLog.updateCardAmountTest.start");
+        var card = fetchCardIfExist(id);
+        card.setAmount(card.getAmount().add(new BigDecimal(100)));
+        log.info("ActionLog.updateCardAmountTest.success");
+    }
+
+    @Transactional
+    @Override
+    public void test2() {
+        log.info("ActionLog.updateCardAmountTest.start");
+        cardRepository.findById(1L);
+        cardRepository.findById(1L);
+        log.info("ActionLog.updateCardAmountTest.success");
     }
 
     @Override

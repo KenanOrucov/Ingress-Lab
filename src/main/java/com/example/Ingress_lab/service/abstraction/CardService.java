@@ -12,6 +12,9 @@ import java.util.List;
 public interface CardService {
     void createCard(CardRequest request);
     CardResponse getCardById(Long id);
+    void test();
+    void test2();
+    void updateCardAmountTest(Long id);
     PageableCardResponse getAllCards(PageCriteria pageCriteria, CardCriteria cardCriteria);
     void updateCard(Long id, CardRequest request);
     void deleteCardById(Long id);
