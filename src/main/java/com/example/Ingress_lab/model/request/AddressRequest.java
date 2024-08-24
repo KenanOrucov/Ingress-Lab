@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CardRequest {
-    private String username;
-    private BigDecimal amount;
+public class AddressRequest {
+    private String country;
+    private String city;
 }

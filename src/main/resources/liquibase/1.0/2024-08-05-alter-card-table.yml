@@ -7,3 +7,7 @@ databaseChangeLog:
             tableName: cards
             columnName: card_number
             newDataType: VARCHAR(16)
+        - addUniqueConstraint:
+            tableName: cards
+            columnNames: card_number
+            constraintName: card_number_unique

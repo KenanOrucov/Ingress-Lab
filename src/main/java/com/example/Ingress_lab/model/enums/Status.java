@@ -1,6 +1,6 @@
 package com.example.Ingress_lab.model.enums;
 
-public enum CardStatus {
+public enum Status {
     ACTIVE,
-    INACTIVE,
+    DELETED,
 }

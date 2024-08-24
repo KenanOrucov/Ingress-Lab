@@ -1,11 +1,10 @@
 package com.example.Ingress_lab.mapper;
 
 import com.example.Ingress_lab.dao.entity.CardEntity;
-import com.example.Ingress_lab.model.criteria.PageCriteria;
-import com.example.Ingress_lab.model.enums.CardStatus;
+import com.example.Ingress_lab.model.enums.Status;
 import com.example.Ingress_lab.model.request.CardRequest;
 import com.example.Ingress_lab.model.response.CardResponse;
-import com.example.Ingress_lab.model.response.PageableCardResponse;
+import com.example.Ingress_lab.model.response.PageableResponse;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
@@ -16,20 +15,18 @@ import java.util.List;
 public enum Mapper {
     CARD_MAPPER;
 
-    public CardEntity toCardEntity(CardRequest request) {
+    public static CardEntity toCardEntity(CardRequest request) {
         return CardEntity.builder()
-                .userName(request.getUserName())
+                .username(request.getUsername())
                 .amount(request.getAmount())
-                .status(CardStatus.ACTIVE)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
+                .status(Status.ACTIVE)
                 .build();
     }
 
-    public CardResponse toCardResponse(CardEntity entity) {
+    public static CardResponse toCardResponse(CardEntity entity) {
         return CardResponse.builder()
                 .id(entity.getId())
-                .userName(entity.getUserName())
+                .username(entity.getUsername())
                 .cardNumber(entity.getCardNumber())
                 .amount(entity.getAmount())
                 .status(entity.getStatus())
@@ -38,24 +35,23 @@ public enum Mapper {
                 .build();
     }
 
-    public List<CardResponse> toCardResponses(List<CardEntity> entities) {
+    public static List<CardResponse> toCardResponses(List<CardEntity> entities) {
         return entities
                 .stream()
-                .map(this::toCardResponse)
+                .map(Mapper::toCardResponse)
                 .toList();
     }
 
-    public CardEntity updateCard(CardEntity entity, CardRequest request) {
-        entity.setUserName(request.getUserName());
+    public static void updateCardEntity(CardEntity entity, CardRequest request) {
+        entity.setUsername(request.getUsername());
         entity.setAmount(request.getAmount());
         entity.setUpdatedAt(LocalDateTime.now());
-        return entity;
     }
 
-    public PageableCardResponse mapToPageableResponse(Page<CardEntity> entities) {
-        return PageableCardResponse
+    public static PageableResponse mapToPageableResponse(Page<CardEntity> entities) {
+        return PageableResponse
                 .builder()
-                .content(Collections.singletonList(entities.map(this::toCardResponse).stream().toList()))
+                .content(Collections.singletonList(entities.map(Mapper::toCardResponse).stream().toList()))
                 .totalElements(entities.getTotalElements())
                 .hasNextPage(entities.hasNext())
                 .lastPageNumber(entities.getTotalPages())

@@ -10,10 +10,8 @@ import static com.fasterxml.jackson.annotation.JsonInclude.Include.USE_DEFAULTS;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(USE_DEFAULTS)
 public class PageCriteria {
-    @JsonInclude(USE_DEFAULTS)
     private Integer page = 0;
-
-    @JsonInclude(USE_DEFAULTS)
     private Integer count = 10;
 }

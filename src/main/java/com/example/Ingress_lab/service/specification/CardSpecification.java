@@ -10,8 +10,7 @@ import jakarta.persistence.criteria.Root;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
-import static com.example.Ingress_lab.dao.entity.CardEntity.Fields.cardNumber;
-import static com.example.Ingress_lab.dao.entity.CardEntity.Fields.amount;
+import static com.example.Ingress_lab.dao.entity.CardEntity.Fields.*;
 import static com.example.Ingress_lab.util.PredicateUtil.applyLikePattern;
 
 @AllArgsConstructor
@@ -24,8 +23,8 @@ public class CardSpecification implements Specification<CardEntity> {
                                  CriteriaQuery<?> query,
                                  CriteriaBuilder cb) {
         var predicates = PredicateUtil.builder()
-                .addNullSafety(cardCriteria.getUserName(),
-                        userName -> cb.like(root.get(cardNumber), applyLikePattern(userName)))
+                .addNullSafety(cardCriteria.getUsername(),
+                        usernameLike -> cb.like(root.get(username), applyLikePattern(usernameLike)))
                 .addNullSafety(cardCriteria.getAmountFrom(),
                         amountFrom -> cb.greaterThanOrEqualTo(root.get(amount), amountFrom))
                 .addNullSafety(cardCriteria.getAmountTo(),

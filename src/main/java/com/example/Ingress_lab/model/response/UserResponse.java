@@ -1,24 +1,23 @@
 package com.example.Ingress_lab.model.response;
 
-import com.example.Ingress_lab.model.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CardResponse {
+public class UserResponse {
     private Long id;
+    private String firstName;
+    private String lastName;
+    private Integer age;
     private String username;
-    private BigDecimal amount;
-    private String cardNumber;
-    private Status status;
+    private String password;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
