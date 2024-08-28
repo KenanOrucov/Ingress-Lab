@@ -1,6 +1,7 @@
 package com.example.Ingress_lab.model.enums;
 
-public enum Status {
-    ACTIVE,
+public enum GuideStatus {
+    FREE,
+    BUSY,
     INACTIVE,
 }

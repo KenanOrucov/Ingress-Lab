@@ -34,4 +34,11 @@ public class ErrorHandler {
         log.error("NotFoundException {}", ex);
         return new ErrorResponse(ex.getCode(), ex.getMessage());
     }
+
+    @ExceptionHandler(GuideBusyException.class)
+    @ResponseStatus(NOT_ACCEPTABLE)
+    public ErrorResponse handle(GuideBusyException ex){
+        log.error("GuideBusyException {}", ex);
+        return new ErrorResponse(ex.getCode(), ex.getMessage());
+    }
 }

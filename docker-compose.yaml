@@ -4,7 +4,7 @@ services:
     container_name: my_postgres
     image: 'postgres:latest'
     environment:
-      POSTGRES_DB: my_postgres
+      POSTGRES_DB: travel_tours
       POSTGRES_USER: root
       POSTGRES_PASSWORD: password
     ports:

@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20240825-05-create-traveler-table
+      author: Kanan Orujov
+      changes:
+        - createTable:
+            tableName: travelers
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: VARCHAR(128)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: VARCHAR(128)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(256)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP
+                  defaultValueComputed: now()
+                  constraints:
+                    nullable: false
