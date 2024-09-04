@@ -26,6 +26,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.CascadeType.MERGE;
+import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -49,27 +51,15 @@ public class TourEntity {
     @Enumerated(STRING)
     private EntityStatus tourStatus;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TourEntity that = (TourEntity) o;
-        return id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 
     @OneToMany(
             mappedBy = "tour",
-            cascade = ALL
+            cascade = {PERSIST, MERGE}
     )
     private Set<DestinationEntity> destinations;
 
 
-    @ManyToMany(cascade = ALL)
+    @ManyToMany(cascade = {PERSIST, MERGE})
     @JoinTable(
             name = "guides_tours",
             joinColumns = @JoinColumn(name = "tour_id"),
@@ -82,5 +72,17 @@ public class TourEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TourEntity that = (TourEntity) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
 }

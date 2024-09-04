@@ -1,5 +1,6 @@
 package com.example.Ingress_lab.service.concrete;
 
+import com.example.Ingress_lab.client.CardClient;
 import com.example.Ingress_lab.dao.entity.TravelerEntity;
 import com.example.Ingress_lab.dao.repository.TravelerRepository;
 import com.example.Ingress_lab.exception.NotFoundException;
@@ -32,6 +33,7 @@ import static com.example.Ingress_lab.model.enums.EntityStatus.INACTIVE;
 public class TravelerServiceHandler implements TravelerService {
     private final TravelerRepository travelerRepository;
     private final TourService tourService;
+    private final CardClient cardClient;
 
     @Override
     public List<TravelerResponse> getAllTravelers() {
@@ -60,6 +62,9 @@ public class TravelerServiceHandler implements TravelerService {
     public void createTraveler(TravelerRequest request) {
         log.info("ActionLog.createTraveler.start request: {}", request);
         var traveler = toTravelerEntity(request);
+
+        var card = cardClient.getCardById(10L);
+        log.info("ActionLog.createTraveler.card is:{}", card);
 
         setToursToTraveler(request, traveler);
 

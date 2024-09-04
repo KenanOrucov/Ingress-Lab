@@ -27,6 +27,7 @@ dependencies {
 	implementation 'org.liquibase:liquibase-core'
 	implementation "net.javacrumbs.shedlock:shedlock-spring:${shedlockVersion}"
 	implementation "net.javacrumbs.shedlock:shedlock-provider-jdbc-template:${shedlockVersion}"
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${openFeignVersion}"
 	runtimeOnly 'org.postgresql:postgresql'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'

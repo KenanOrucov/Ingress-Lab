@@ -44,7 +44,6 @@ public class PassportEntity {
     private EntityStatus passportStatus;
     @OneToOne(
             mappedBy = "passport",
-            cascade = ALL,
             fetch = LAZY
     )
     private GuideEntity guide;

@@ -15,6 +15,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.CascadeType.MERGE;
+import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -37,11 +39,11 @@ public class GuideEntity {
     @Enumerated(STRING)
     private GuideStatus status;
 
-    @OneToOne(cascade = ALL, fetch = LAZY)
+    @OneToOne(cascade = {PERSIST, MERGE}, fetch = LAZY)
     @JoinColumn(name = "passport_id")
     private PassportEntity passport;
 
-    @ManyToMany(cascade = ALL)
+    @ManyToMany(cascade = {PERSIST, MERGE})
     @JoinTable(
             name = "guides_tours",
             joinColumns = @JoinColumn(name = "guide_id"),

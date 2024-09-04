@@ -1,0 +1,3 @@
+ms-card:
+  client:
+    url: http://localhost:9090

@@ -23,6 +23,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.CascadeType.MERGE;
+import static jakarta.persistence.CascadeType.PERSIST;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -44,7 +46,7 @@ public class TravelerEntity {
     @Enumerated(STRING)
     private EntityStatus travelerStatus;
 
-    @ManyToMany(cascade = ALL)
+    @ManyToMany(cascade = {PERSIST, MERGE})
     @JoinTable(
             name = "tours_travelers",
             joinColumns = @JoinColumn(name = "traveler_id"),
