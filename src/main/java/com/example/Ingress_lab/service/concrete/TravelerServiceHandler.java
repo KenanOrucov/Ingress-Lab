@@ -23,8 +23,8 @@ import static com.example.Ingress_lab.mapper.TravelerMapper.toTravelerResponse;
 import static com.example.Ingress_lab.mapper.TravelerMapper.toTravelerResponses;
 import static com.example.Ingress_lab.mapper.TravelerMapper.updateTravelerEntity;
 import static com.example.Ingress_lab.model.enums.ExceptionConstants.TRAVELER_NOT_FOUND;
-import static com.example.Ingress_lab.model.enums.Status.ACTIVE;
-import static com.example.Ingress_lab.model.enums.Status.INACTIVE;
+import static com.example.Ingress_lab.model.enums.EntityStatus.ACTIVE;
+import static com.example.Ingress_lab.model.enums.EntityStatus.INACTIVE;
 
 @Slf4j
 @Service
@@ -36,7 +36,7 @@ public class TravelerServiceHandler implements TravelerService {
     @Override
     public List<TravelerResponse> getAllTravelers() {
         log.info("ActionLog.getAllTravelers.start");
-        return toTravelerResponses(travelerRepository.findAllByStatus(ACTIVE));
+        return toTravelerResponses(travelerRepository.findAllByTravelerStatus(ACTIVE));
     }
 
     @Cacheable("travelers")
@@ -86,7 +86,7 @@ public class TravelerServiceHandler implements TravelerService {
     public void deleteTraveler(Long id) {
         log.info("ActionLog.deleteTraveler.start id: {}", id);
         var traveler = fetchTravelerIfExist(id);
-        traveler.setStatus(INACTIVE);
+        traveler.setTravelerStatus(INACTIVE);
         log.info("ActionLog.deleteTraveler.success id: {}", id);
         travelerRepository.save(traveler);
     }

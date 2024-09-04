@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.example.Ingress_lab.mapper.TourMapper.toTourEntity;
@@ -29,9 +28,8 @@ import static com.example.Ingress_lab.mapper.TourMapper.updateTourEntity;
 import static com.example.Ingress_lab.model.enums.ExceptionConstants.GUIDE_BUSY;
 import static com.example.Ingress_lab.model.enums.ExceptionConstants.TOUR_NOT_FOUND;
 import static com.example.Ingress_lab.model.enums.GuideStatus.BUSY;
-import static com.example.Ingress_lab.model.enums.GuideStatus.FREE;
-import static com.example.Ingress_lab.model.enums.Status.ACTIVE;
-import static com.example.Ingress_lab.model.enums.Status.INACTIVE;
+import static com.example.Ingress_lab.model.enums.EntityStatus.ACTIVE;
+import static com.example.Ingress_lab.model.enums.EntityStatus.INACTIVE;
 
 @Slf4j
 @Service
@@ -42,7 +40,7 @@ public class TourServiceHandler implements TourService {
     @Override
     public List<TourResponse> getAllTours() {
         log.info("ActionLog.getAllTours.start");
-        return toTourResponses(tourRepository.findAllByStatus(ACTIVE));
+        return toTourResponses(tourRepository.findAllByTourStatus(ACTIVE));
     }
 
     @Cacheable("tours")
@@ -93,7 +91,7 @@ public class TourServiceHandler implements TourService {
     public void deleteTour(Long id) {
         log.info("ActionLog.deleteTour.start id: {}", id);
         var tour = fetchTourIfExist(id);
-        tour.setStatus(INACTIVE);
+        tour.setTourStatus(INACTIVE);
         updateCache(id);
         log.info("ActionLog.deleteTour.success id: {}", id);
         tourRepository.save(tour);
@@ -116,7 +114,7 @@ public class TourServiceHandler implements TourService {
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(TOUR_NOT_FOUND.getCode(), TOUR_NOT_FOUND.getMessage()));
 
-        if (tour.getStatus() == INACTIVE) {
+        if (tour.getTourStatus() == INACTIVE) {
             throw new NotFoundException(TOUR_NOT_FOUND.getCode(), TOUR_NOT_FOUND.getMessage());
         }
         return tour;

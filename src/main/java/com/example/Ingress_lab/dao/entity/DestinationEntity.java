@@ -1,6 +1,6 @@
 package com.example.Ingress_lab.dao.entity;
 
-import com.example.Ingress_lab.model.enums.Status;
+import com.example.Ingress_lab.model.enums.EntityStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -12,13 +12,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
@@ -40,12 +40,24 @@ public class DestinationEntity {
     private String description;
     private LocalDate visitDate;
     @Enumerated(STRING)
-    private Status status;
+    private EntityStatus destinationStatus;
     @ManyToOne(fetch = LAZY)
-    @ToString.Exclude
     private TourEntity tour;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DestinationEntity that = (DestinationEntity) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

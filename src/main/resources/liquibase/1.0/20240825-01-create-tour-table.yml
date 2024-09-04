@@ -15,31 +15,31 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: name
-                  type: VARCHAR(256)
+                  type: VARCHAR(64)
                   constraints:
                     nullable: false
               - column:
                   name: description
-                  type: VARCHAR(256)
+                  type: TEXT
                   constraints:
                     nullable: false
               - column:
                   name: price
-                  type: numeric(16,2)
+                  type: NUMERIC(16,2)
                   constraints:
                     nullable: false
               - column:
                   name: start_date
-                  type: date
+                  type: DATE
                   constraints:
                     nullable: false
               - column:
                   name: end_date
-                  type: date
+                  type: DATE
                   constraints:
                     nullable: false
               - column:
-                  name: status
+                  name: tour_status
                   type: VARCHAR(16)
                   constraints:
                     nullable: false
@@ -47,11 +47,7 @@ databaseChangeLog:
                   name: created_at
                   type: TIMESTAMP
                   defaultValueComputed: now()
-                  constraints:
-                    nullable: false
               - column:
                   name: updated_at
                   type: TIMESTAMP
                   defaultValueComputed: now()
-                  constraints:
-                    nullable: false

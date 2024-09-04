@@ -1,18 +1,8 @@
 package com.example.Ingress_lab.dao.entity;
 import com.example.Ingress_lab.model.enums.GuideStatus;
-import com.example.Ingress_lab.model.enums.Status;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Builder;
@@ -21,6 +11,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 import static jakarta.persistence.CascadeType.ALL;
@@ -48,7 +39,6 @@ public class GuideEntity {
 
     @OneToOne(cascade = ALL, fetch = LAZY)
     @JoinColumn(name = "passport_id")
-    @ToString.Exclude
     private PassportEntity passport;
 
     @ManyToMany(cascade = ALL)
@@ -57,7 +47,6 @@ public class GuideEntity {
             joinColumns = @JoinColumn(name = "guide_id"),
             inverseJoinColumns = @JoinColumn(name = "tour_id")
     )
-    @ToString.Exclude
     private Set<TourEntity> tours;
 
 
@@ -66,4 +55,17 @@ public class GuideEntity {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GuideEntity that = (GuideEntity) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

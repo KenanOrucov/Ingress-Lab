@@ -2,9 +2,7 @@ package com.example.Ingress_lab.service.abstraction;
 
 import com.example.Ingress_lab.dao.entity.GuideEntity;
 import com.example.Ingress_lab.model.enums.GuideStatus;
-import com.example.Ingress_lab.model.enums.Status;
 import com.example.Ingress_lab.model.request.GuideRequest;
-import com.example.Ingress_lab.model.response.DestinationResponse;
 import com.example.Ingress_lab.model.response.GuideResponse;
 
 import java.time.LocalDate;

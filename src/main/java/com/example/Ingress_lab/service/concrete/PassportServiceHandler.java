@@ -18,8 +18,8 @@ import static com.example.Ingress_lab.mapper.PassportMapper.toPassportResponse;
 import static com.example.Ingress_lab.mapper.PassportMapper.toPassportResponses;
 import static com.example.Ingress_lab.mapper.PassportMapper.updatePassportEntity;
 import static com.example.Ingress_lab.model.enums.ExceptionConstants.PASSPORT_NOT_FOUND;
-import static com.example.Ingress_lab.model.enums.Status.ACTIVE;
-import static com.example.Ingress_lab.model.enums.Status.INACTIVE;
+import static com.example.Ingress_lab.model.enums.EntityStatus.ACTIVE;
+import static com.example.Ingress_lab.model.enums.EntityStatus.INACTIVE;
 
 @Slf4j
 @Service
@@ -29,7 +29,7 @@ public class PassportServiceHandler implements PassportService {
     @Override
     public List<PassportResponse> getAllPassports() {
         log.info("ActionLog.getAllPassports.start");
-        return toPassportResponses(passportRepository.findAllByStatus(ACTIVE));
+        return toPassportResponses(passportRepository.findAllByPassportStatus(ACTIVE));
     }
 
     @Override
@@ -61,7 +61,7 @@ public class PassportServiceHandler implements PassportService {
     public void deletePassport(Long id) {
         log.info("ActionLog.deletePassport.start id: {}", id);
         var passport = fetchPassportIfExist(id);
-        passport.setStatus(INACTIVE);
+        passport.setPassportStatus(INACTIVE);
         log.info("ActionLog.deletePassport.success id: {}", id);
         passportRepository.save(passport);
     }

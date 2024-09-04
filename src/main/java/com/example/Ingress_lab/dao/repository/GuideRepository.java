@@ -2,16 +2,13 @@ package com.example.Ingress_lab.dao.repository;
 
 
 import com.example.Ingress_lab.dao.entity.GuideEntity;
-import com.example.Ingress_lab.dao.entity.TravelerEntity;
 import com.example.Ingress_lab.model.enums.GuideStatus;
-import com.example.Ingress_lab.model.enums.Status;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +33,5 @@ public interface GuideRepository extends JpaRepository<GuideEntity, Long>, JpaSp
             "WHERE g.status != 'INACTIVE'")
     List<GuideEntity> findAvailableGuidesWithinDate();
 
-
-//    List<GuideEntity> findGuidesByTime()
 
 }

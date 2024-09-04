@@ -4,7 +4,6 @@ import com.example.Ingress_lab.dao.entity.GuideEntity;
 import com.example.Ingress_lab.dao.repository.GuideRepository;
 import com.example.Ingress_lab.exception.NotFoundException;
 import com.example.Ingress_lab.model.enums.GuideStatus;
-import com.example.Ingress_lab.model.enums.Status;
 import com.example.Ingress_lab.model.request.GuideRequest;
 import com.example.Ingress_lab.model.response.GuideResponse;
 import com.example.Ingress_lab.service.abstraction.GuideService;
@@ -27,7 +26,6 @@ import static com.example.Ingress_lab.mapper.PassportMapper.toPassportEntity;
 import static com.example.Ingress_lab.mapper.PassportMapper.updatePassportEntity;
 import static com.example.Ingress_lab.model.enums.ExceptionConstants.GUIDE_NOT_FOUND;
 import static com.example.Ingress_lab.model.enums.GuideStatus.INACTIVE;
-import static com.example.Ingress_lab.model.enums.GuideStatus.FREE;
 
 @Slf4j
 @Service

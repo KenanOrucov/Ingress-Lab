@@ -8,7 +8,7 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: bigint
+                  type: BIGINT
                   autoIncrement: true
                   constraints:
                     primaryKey: true
@@ -20,12 +20,12 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: issue_date
-                  type: date
+                  type: DATE
                   constraints:
                     nullable: false
               - column:
                   name: expiry_date
-                  type: date
+                  type: DATE
                   constraints:
                     nullable: false
               - column:
@@ -34,7 +34,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: status
+                  name: passport_status
                   type: VARCHAR(16)
                   constraints:
                     nullable: false
@@ -42,11 +42,7 @@ databaseChangeLog:
                   name: created_at
                   type: TIMESTAMP
                   defaultValueComputed: now()
-                  constraints:
-                    nullable: false
               - column:
                   name: updated_at
                   type: TIMESTAMP
                   defaultValueComputed: now()
-                  constraints:
-                    nullable: false

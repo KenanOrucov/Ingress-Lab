@@ -8,14 +8,14 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: bigint
+                  type: BIGINT
                   autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
               - column:
                   name: name
-                  type: VARCHAR(256)
+                  type: VARCHAR(64)
                   constraints:
                     nullable: false
               - column:
@@ -37,17 +37,13 @@ databaseChangeLog:
                   name: created_at
                   type: TIMESTAMP
                   defaultValueComputed: now()
-                  constraints:
-                    nullable: false
               - column:
                   name: updated_at
                   type: TIMESTAMP
                   defaultValueComputed: now()
-                  constraints:
-                    nullable: false
               - column:
                   name: passport_id
-                  type: bigint
+                  type: BIGINT
                   constraints:
                     foreignKeyName: fk_passport_guide
                     references: passports(id)

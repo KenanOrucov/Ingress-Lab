@@ -1,15 +1,13 @@
 package com.example.Ingress_lab.model.response;
 
 
-import com.example.Ingress_lab.model.enums.Status;
+import com.example.Ingress_lab.model.enums.EntityStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -20,8 +18,7 @@ public class TravelerResponse {
     private String firstName;
     private String lastName;
     private String email;
-    private Status status;
+    private EntityStatus travelerEntityStatus;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-//    private List<TourResponse> tours;
 }

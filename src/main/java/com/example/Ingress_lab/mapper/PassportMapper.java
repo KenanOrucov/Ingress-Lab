@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.example.Ingress_lab.model.enums.Status.ACTIVE;
+import static com.example.Ingress_lab.model.enums.EntityStatus.ACTIVE;
 
 public enum PassportMapper {
     PASSPORT_MAPPER;
@@ -22,7 +22,7 @@ public enum PassportMapper {
                 .expiryDate(request.getExpiryDate())
                 .country(request.getCountry())
                 .guide(guide)
-                .status(ACTIVE)
+                .passportStatus(ACTIVE)
                 .build();
     }
 
@@ -33,7 +33,7 @@ public enum PassportMapper {
                 .issueDate(entity.getIssueDate())
                 .expiryDate(entity.getExpiryDate())
                 .country(entity.getCountry())
-                .status(entity.getStatus())
+                .passportEntityStatus(entity.getPassportStatus())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();

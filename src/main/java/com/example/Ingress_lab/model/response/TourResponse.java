@@ -1,7 +1,7 @@
 package com.example.Ingress_lab.model.response;
 
 
-import com.example.Ingress_lab.model.enums.Status;
+import com.example.Ingress_lab.model.enums.EntityStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -24,9 +22,7 @@ public class TourResponse {
     private BigDecimal price;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Status status;
+    private EntityStatus tourEntityStatus;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-//    private Set<DestinationResponse> destinations;
-//    private List<GuideResponse> guides;
 }

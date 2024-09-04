@@ -1,6 +1,6 @@
 package com.example.Ingress_lab.dao.entity;
 
-import com.example.Ingress_lab.model.enums.Status;
+import com.example.Ingress_lab.model.enums.EntityStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -14,12 +14,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 import static jakarta.persistence.CascadeType.ALL;
@@ -42,7 +42,7 @@ public class TravelerEntity {
     private String lastName;
     private String email;
     @Enumerated(STRING)
-    private Status status;
+    private EntityStatus travelerStatus;
 
     @ManyToMany(cascade = ALL)
     @JoinTable(
@@ -50,11 +50,23 @@ public class TravelerEntity {
             joinColumns = @JoinColumn(name = "traveler_id"),
             inverseJoinColumns = @JoinColumn(name = "tour_id")
     )
-    @ToString.Exclude
     private Set<TourEntity> tours;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TravelerEntity that = (TravelerEntity) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

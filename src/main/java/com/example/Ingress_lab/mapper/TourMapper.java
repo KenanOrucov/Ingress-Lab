@@ -8,8 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.example.Ingress_lab.mapper.GuideMapper.toGuideResponses;
-import static com.example.Ingress_lab.model.enums.Status.ACTIVE;
+import static com.example.Ingress_lab.model.enums.EntityStatus.ACTIVE;
 
 public enum TourMapper {
     TOUR_MAPPER;
@@ -21,7 +20,7 @@ public enum TourMapper {
                 .price(request.getPrice())
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
-                .status(ACTIVE)
+                .tourStatus(ACTIVE)
                 .build();
     }
 
@@ -33,13 +32,9 @@ public enum TourMapper {
                 .price(entity.getPrice())
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())
-                .status(entity.getStatus())
+                .tourEntityStatus(entity.getTourStatus())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
-//                .guides(toGuideResponses(entity
-//                        .getGuides()
-//                        .stream()
-//                        .toList()))
                 .build();
     }
 

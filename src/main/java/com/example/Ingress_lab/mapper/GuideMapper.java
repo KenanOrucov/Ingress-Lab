@@ -10,7 +10,6 @@ import java.util.List;
 
 import static com.example.Ingress_lab.mapper.PassportMapper.toPassportResponse;
 import static com.example.Ingress_lab.model.enums.GuideStatus.FREE;
-import static com.example.Ingress_lab.model.enums.Status.ACTIVE;
 
 public enum GuideMapper {
     GUIDE_MAPPER;

@@ -7,9 +7,7 @@ import com.example.Ingress_lab.model.response.TravelerResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.example.Ingress_lab.mapper.GuideMapper.toGuideResponses;
-import static com.example.Ingress_lab.mapper.TourMapper.toTourResponses;
-import static com.example.Ingress_lab.model.enums.Status.ACTIVE;
+import static com.example.Ingress_lab.model.enums.EntityStatus.ACTIVE;
 
 public enum TravelerMapper {
     TRAVELER_MAPPER;
@@ -19,7 +17,7 @@ public enum TravelerMapper {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
-                .status(ACTIVE)
+                .travelerStatus(ACTIVE)
                 .build();
     }
 
@@ -29,13 +27,9 @@ public enum TravelerMapper {
                 .firstName(entity.getFirstName())
                 .lastName(entity.getLastName())
                 .email(entity.getEmail())
-                .status(entity.getStatus())
+                .travelerEntityStatus(entity.getTravelerStatus())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
-//                .tours(toTourResponses(entity
-//                        .getTours()
-//                        .stream()
-//                        .toList()))
                 .build();
     }
 

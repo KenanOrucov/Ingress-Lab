@@ -20,16 +20,16 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: description
-                  type: VARCHAR(256)
+                  type: TEXT
                   constraints:
                     nullable: false
               - column:
                   name: visit_date
-                  type: date
+                  type: DATE
                   constraints:
                     nullable: false
               - column:
-                  name: status
+                  name: destination_status
                   type: VARCHAR(16)
                   constraints:
                     nullable: false
@@ -37,17 +37,13 @@ databaseChangeLog:
                   name: created_at
                   type: TIMESTAMP
                   defaultValueComputed: now()
-                  constraints:
-                    nullable: false
               - column:
                   name: updated_at
                   type: TIMESTAMP
                   defaultValueComputed: now()
-                  constraints:
-                    nullable: false
               - column:
                   name: tour_id
-                  type: bigint
+                  type: BIGINT
                   constraints:
                     foreignKeyName: fk_destinations_tours
                     references: tours(id)

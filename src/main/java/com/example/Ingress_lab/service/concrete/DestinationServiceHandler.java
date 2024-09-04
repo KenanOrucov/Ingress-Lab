@@ -22,8 +22,8 @@ import static com.example.Ingress_lab.mapper.DestinationMapper.toDestinationResp
 import static com.example.Ingress_lab.mapper.DestinationMapper.toDestinationResponses;
 import static com.example.Ingress_lab.mapper.DestinationMapper.updateDestinationEntity;
 import static com.example.Ingress_lab.model.enums.ExceptionConstants.DESTINATION_NOT_FOUND;
-import static com.example.Ingress_lab.model.enums.Status.ACTIVE;
-import static com.example.Ingress_lab.model.enums.Status.INACTIVE;
+import static com.example.Ingress_lab.model.enums.EntityStatus.ACTIVE;
+import static com.example.Ingress_lab.model.enums.EntityStatus.INACTIVE;
 
 @Slf4j
 @Service
@@ -35,7 +35,7 @@ public class DestinationServiceHandler implements DestinationService {
     @Override
     public List<DestinationResponse> getAllDestinations() {
         log.info("ActionLog.getAllDestinations.start");
-        return toDestinationResponses(destinationRepository.findAllByStatus(ACTIVE));
+        return toDestinationResponses(destinationRepository.findAllByDestinationStatus(ACTIVE));
     }
 
     @Cacheable("destinations")
@@ -50,7 +50,7 @@ public class DestinationServiceHandler implements DestinationService {
     @Override
     public List<DestinationResponse> getDestinationsByTourId(Long tourId) {
         log.info("ActionLog.getDestinationsByTourId.start tourId: {}", tourId);
-        var destinations = destinationRepository.findByStatusAndTourId(ACTIVE, tourId);
+        var destinations = destinationRepository.findByDestinationStatusAndTourId(ACTIVE, tourId);
         log.info("ActionLog.getDestinationsByTourId.success tourId: {}", tourId);
         return toDestinationResponses(destinations);
     }
@@ -86,7 +86,7 @@ public class DestinationServiceHandler implements DestinationService {
     public void deleteDestination(Long id) {
         log.info("ActionLog.deleteDestination.start id: {}", id);
         var destination = fetchDestinationIfExist(id);
-        destination.setStatus(INACTIVE);
+        destination.setDestinationStatus(INACTIVE);
         log.info("ActionLog.deleteDestination.success id: {}", id);
         destinationRepository.save(destination);
     }
@@ -109,7 +109,7 @@ public class DestinationServiceHandler implements DestinationService {
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(DESTINATION_NOT_FOUND.getCode(), DESTINATION_NOT_FOUND.getMessage()));
 
-        if (destination.getStatus() == INACTIVE) {
+        if (destination.getDestinationStatus() == INACTIVE) {
             throw new NotFoundException(DESTINATION_NOT_FOUND.getCode(), DESTINATION_NOT_FOUND.getMessage());
         }
 

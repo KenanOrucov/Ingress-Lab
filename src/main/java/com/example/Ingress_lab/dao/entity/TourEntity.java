@@ -1,6 +1,6 @@
 package com.example.Ingress_lab.dao.entity;
 
-import com.example.Ingress_lab.model.enums.Status;
+import com.example.Ingress_lab.model.enums.EntityStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +15,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,6 +22,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 import static jakarta.persistence.CascadeType.ALL;
@@ -47,12 +47,25 @@ public class TourEntity {
     private LocalDate startDate;
     private LocalDate endDate;
     @Enumerated(STRING)
-    private Status status;
+    private EntityStatus tourStatus;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TourEntity that = (TourEntity) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     @OneToMany(
             mappedBy = "tour",
             cascade = ALL
     )
-    @ToString.Exclude
     private Set<DestinationEntity> destinations;
 
 
@@ -62,7 +75,6 @@ public class TourEntity {
             joinColumns = @JoinColumn(name = "tour_id"),
             inverseJoinColumns = @JoinColumn(name = "guide_id")
     )
-    @ToString.Exclude
     private Set<GuideEntity> guides;
 
     @CreationTimestamp

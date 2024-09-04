@@ -1,6 +1,6 @@
 package com.example.Ingress_lab.model.response;
 
-import com.example.Ingress_lab.model.enums.Status;
+import com.example.Ingress_lab.model.enums.EntityStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +19,7 @@ public class PassportResponse {
     private LocalDate issueDate;
     private LocalDate expiryDate;
     private String country;
-    private Status status;
+    private EntityStatus passportEntityStatus;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

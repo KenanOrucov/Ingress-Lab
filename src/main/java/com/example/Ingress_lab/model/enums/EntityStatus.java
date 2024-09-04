@@ -1,6 +1,6 @@
 package com.example.Ingress_lab.model.enums;
 
-public enum Status {
+public enum EntityStatus {
     ACTIVE,
     INACTIVE,
 }

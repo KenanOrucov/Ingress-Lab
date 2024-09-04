@@ -1,6 +1,6 @@
 package com.example.Ingress_lab.model.response;
 
-import com.example.Ingress_lab.model.enums.Status;
+import com.example.Ingress_lab.model.enums.EntityStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,8 +18,7 @@ public class DestinationResponse {
     private String location;
     private String description;
     private LocalDate visitDate;
-    private Status status;
+    private EntityStatus destinationEntityStatus;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-//    private TourResponse tour;
 }
