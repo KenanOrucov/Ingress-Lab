@@ -35,32 +35,24 @@ public class GuideServiceHandler implements GuideService {
 
     @Override
     public List<GuideResponse> getAllGuides() {
-        log.info("ActionLog.getAllGuides.start");
         return toGuideResponses(guideRepository.findAllByStatusIsNot(INACTIVE));
     }
 
     @Cacheable("guides")
     @Override
     public GuideResponse getGuideById(Long id) {
-        log.info("ActionLog.getGuideById.start id: {}", id);
         var guide = fetchGuideIfExist(id);
-        log.info("ActionLog.getGuideById.success id: {}", id);
         return toGuideResponse(guide);
     }
 
     @Override
     public List<GuideResponse> getGuidesByTourId(Long tourId) {
-        log.info("ActionLog.getGuidesByTourId.start tourId: {}", tourId);
         var guides = guideRepository.findGuidesByTourIdAndStatus(tourId);
-        log.info("guides: {}", guides);
-
-        log.info("ActionLog.getGuidesByTourId.success tourId: {}", tourId);
         return toGuideResponses(guides);
     }
 
     @Override
     public List<GuideResponse> getAvailableGuides(LocalDate date) {
-        log.info("ActionLog.getAvailableGuides.start");
         var guide = guideRepository.findAvailableGuidesWithinDate();
 
         var availableGuides = guide.stream()
@@ -74,19 +66,14 @@ public class GuideServiceHandler implements GuideService {
 
     @Override
     public void createGuide(GuideRequest request) {
-        log.info("ActionLog.createGuide.start request: {}", request);
         var guide = toGuideEntity(request);
         var passport = toPassportEntity(guide, request.getPassport());
-
         guide.setPassport(passport);
-
-        log.info("ActionLog.createGuide.success guide: {}", guide);
         guideRepository.save(guide);
     }
 
     @Override
     public void updateGuide(Long id, GuideRequest request) {
-        log.info("ActionLog.updateGuide.start id: {}, request: {}", id, request);
         var guide = fetchGuideIfExist(id);
 
         updateGuideEntity(guide, request);
@@ -94,37 +81,30 @@ public class GuideServiceHandler implements GuideService {
 
         updateCache(id);
         guideRepository.save(guide);
-        log.info("ActionLog.updateGuide.success id: {}", id);
     }
 
     @Override
     public void deleteGuide(Long id) {
-        log.info("ActionLog.deleteGuide.start id: {}", id);
         var guide = fetchGuideIfExist(id);
         guide.setStatus(INACTIVE);
-        log.info("ActionLog.deleteGuide.success id: {}", id);
         guideRepository.save(guide);
     }
 
     @CacheEvict(allEntries = true, value = "guides")
     @Override
     public void clearCache() {
-        log.info("ActionLog.clearCache.success");
     }
 
     @CachePut(value = "cards")
     public void updateCache(Long id){
-        log.info("ActionLog.updateCache.success id: {}", id);
         getGuideById(id);
     }
 
     @Override
     public void changeGuideStatus(Long id, GuideStatus status) {
-        log.info("ActionLog.changeGuideStatus.start id: {}, status: {}", id, status);
         var guide = fetchGuideIfExist(id);
         guide.setStatus(status);
         guideRepository.save(guide);
-        log.info("ActionLog.changeGuideStatus.success id: {}", id);
     }
 
     public GuideEntity fetchGuideIfExist(Long id) {

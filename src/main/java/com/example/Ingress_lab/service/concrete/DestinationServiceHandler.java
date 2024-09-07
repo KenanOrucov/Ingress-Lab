@@ -34,72 +34,55 @@ public class DestinationServiceHandler implements DestinationService {
 
     @Override
     public List<DestinationResponse> getAllDestinations() {
-        log.info("ActionLog.getAllDestinations.start");
         return toDestinationResponses(destinationRepository.findAllByDestinationStatus(ACTIVE));
     }
 
     @Cacheable("destinations")
     @Override
     public DestinationResponse getDestinationById(Long id) {
-        log.info("ActionLog.getCardById.start id: {}", id);
         var destination = fetchDestinationIfExist(id);
-        log.info("ActionLog.getCardById.success id: {}", id);
         return toDestinationResponse(destination);
     }
 
     @Override
     public List<DestinationResponse> getDestinationsByTourId(Long tourId) {
-        log.info("ActionLog.getDestinationsByTourId.start tourId: {}", tourId);
         var destinations = destinationRepository.findByDestinationStatusAndTourId(ACTIVE, tourId);
-        log.info("ActionLog.getDestinationsByTourId.success tourId: {}", tourId);
         return toDestinationResponses(destinations);
     }
 
     @Override
     public void createDestination(DestinationRequest request) {
-        log.info("ActionLog.createDestination.start request: {}", request);
         var destination = toDestinationEntity(request);
-
         setTourToDestination(request, destination);
-
-        log.info("ActionLog.createDestination.success destination: {}", destination);
         destinationRepository.save(destination);
     }
 
     @Override
     @Transactional
     public void updateDestination(Long id, DestinationRequest request) {
-        log.info("ActionLog.updateDestination.start id: {}, request: {}", id, request);
         var destination = fetchDestinationIfExist(id);
         updateDestinationEntity(destination, request);
-
         setTourToDestination(request, destination);
-
         updateCache(id);
         destination.setTour(tourService.fetchTourIfExist(request.getTourId()));
         destinationRepository.save(destination);
-        log.info("ActionLog.updateDestination.success id: {}", id);
     }
 
     @Override
     @Transactional
     public void deleteDestination(Long id) {
-        log.info("ActionLog.deleteDestination.start id: {}", id);
         var destination = fetchDestinationIfExist(id);
         destination.setDestinationStatus(INACTIVE);
-        log.info("ActionLog.deleteDestination.success id: {}", id);
         destinationRepository.save(destination);
     }
 
     @CacheEvict(allEntries = true, value = "destinations")
     @Override
     public void clearCache() {
-        log.info("ActionLog.clearCache.success");
     }
 
     @CachePut(value = "destinations")
     public void updateCache(Long id){
-        log.info("ActionLog.updateCache.success id: {}", id);
         getDestinationById(id);
     }
 

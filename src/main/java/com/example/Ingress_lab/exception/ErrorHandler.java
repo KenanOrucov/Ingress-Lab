@@ -1,6 +1,7 @@
 package com.example.Ingress_lab.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -40,5 +41,16 @@ public class ErrorHandler {
     public ErrorResponse handle(GuideBusyException ex){
         log.error("GuideBusyException {}", ex);
         return new ErrorResponse(ex.getCode(), ex.getMessage());
+    }
+
+    @ExceptionHandler(CustomFeignException.class)
+    public ResponseEntity<ErrorResponse> handle(CustomFeignException ex){
+        log.error("CustomFeignException: {}", ex.getMessage());
+        return ResponseEntity.status(ex.getStatus()).body(
+                ErrorResponse.builder()
+                        .message(ex.getMessage())
+                        .code(ex.getCode())
+                        .build()
+        );
     }
 }

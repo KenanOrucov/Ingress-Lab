@@ -13,7 +13,8 @@ public enum ExceptionConstants {
     TOUR_NOT_FOUND("TOUR_NOT_FOUND", "Tour not found."),
     TRAVELER_NOT_FOUND("TRAVELER_NOT_FOUND", "Traveler not found."),
     UNEXPECTED_EXCEPTION("UNEXPECTED_EXCEPTION", "Unexpected exception occurred."),
-    HTTP_METHOD_NOT_ALLOWED("METHOD_NOT_ALLOWED", "Method not allowed."),;
+    HTTP_METHOD_NOT_ALLOWED("METHOD_NOT_ALLOWED", "Method not allowed."),
+    CLIENT_ERROR("CLIENT_ERROR", "Exception from Client");
     private final String code;
     private final String message;
 }

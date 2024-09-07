@@ -39,73 +39,58 @@ public class TourServiceHandler implements TourService {
     private final GuideService guideService;
     @Override
     public List<TourResponse> getAllTours() {
-        log.info("ActionLog.getAllTours.start");
         return toTourResponses(tourRepository.findAllByTourStatus(ACTIVE));
     }
 
     @Cacheable("tours")
     @Override
     public TourResponse getTourById(Long id) {
-        log.info("ActionLog.getTourById.start id: {}", id);
         var tour = fetchTourIfExist(id);
-        log.info("ActionLog.getTourById.success id: {}", id);
         return toTourResponse(tour);
     }
 
     @Override
     public List<TourResponse> getToursByTravelerId(Long travelerId) {
-        log.info("ActionLog.getToursByTravelerId.start travelerId: {}", travelerId);
         var tours = tourRepository.findToursByTravelerIdAndStatus(travelerId, ACTIVE.name());
-
-        log.info("ActionLog.getToursByTravelerId.success travelerId: {}", travelerId);
         return toTourResponses(tours);
     }
 
     @Override
     @Transactional
     public void createTour(TourRequest request) {
-        log.info("ActionLog.createTour.start request: {}", request);
         var tour = toTourEntity(request);
-
         setGuidesToTour(request, tour);
-
-        log.info("ActionLog.createTour.success tour: {}", tour);
         tourRepository.save(tour);
     }
 
     @Override
     @Transactional
     public void updateTour(Long id, TourRequest request) {
-        log.info("ActionLog.updateTour.start id: {}, request: {}", id, request);
         var tour = fetchTourIfExist(id);
         updateTourEntity(tour, request);
 
         setGuidesToTour(request, tour);
 
         tourRepository.save(tour);
-        log.info("ActionLog.updateTour.success id: {}", id);
     }
 
     @Override
     @Transactional
     public void deleteTour(Long id) {
-        log.info("ActionLog.deleteTour.start id: {}", id);
         var tour = fetchTourIfExist(id);
         tour.setTourStatus(INACTIVE);
         updateCache(id);
-        log.info("ActionLog.deleteTour.success id: {}", id);
         tourRepository.save(tour);
     }
 
     @CacheEvict(allEntries = true, value = "tours")
     @Override
     public void clearCache() {
-        log.info("ActionLog.clearCache.success");
+
     }
 
     @CachePut(value = "tours")
     public void updateCache(Long id){
-        log.info("ActionLog.updateCache.success id: {}", id);
         getTourById(id);
     }
 
