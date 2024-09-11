@@ -3,6 +3,7 @@ package com.example.Ingress_lab.service.concrete;
 import com.example.Ingress_lab.dao.entity.DestinationEntity;
 import com.example.Ingress_lab.dao.repository.DestinationRepository;
 import com.example.Ingress_lab.exception.NotFoundException;
+import com.example.Ingress_lab.model.cache.DestinationCacheData;
 import com.example.Ingress_lab.model.request.DestinationRequest;
 import com.example.Ingress_lab.model.response.DestinationResponse;
 import com.example.Ingress_lab.service.abstraction.DestinationService;
@@ -17,10 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.example.Ingress_lab.mapper.DestinationMapper.toDestinationCacheData;
 import static com.example.Ingress_lab.mapper.DestinationMapper.toDestinationEntity;
 import static com.example.Ingress_lab.mapper.DestinationMapper.toDestinationResponse;
 import static com.example.Ingress_lab.mapper.DestinationMapper.toDestinationResponses;
 import static com.example.Ingress_lab.mapper.DestinationMapper.updateDestinationEntity;
+import static com.example.Ingress_lab.model.enums.Constants.CACHE_KEY;
 import static com.example.Ingress_lab.model.enums.ExceptionConstants.DESTINATION_NOT_FOUND;
 import static com.example.Ingress_lab.model.enums.EntityStatus.ACTIVE;
 import static com.example.Ingress_lab.model.enums.EntityStatus.INACTIVE;
@@ -31,20 +34,29 @@ import static com.example.Ingress_lab.model.enums.EntityStatus.INACTIVE;
 public class DestinationServiceHandler implements DestinationService {
     private final DestinationRepository destinationRepository;
     private final TourService tourService;
-
+    private final CacheServiceHandler cacheServiceHandler;
     @Override
     public List<DestinationResponse> getAllDestinations() {
         log.info("ActionLog.getAllDestinations.start");
         return toDestinationResponses(destinationRepository.findAllByDestinationStatus(ACTIVE));
     }
 
-    @Cacheable("destinations")
     @Override
-    public DestinationResponse getDestinationById(Long id) {
+    public DestinationCacheData getDestinationById(Long id) {
         log.info("ActionLog.getCardById.start id: {}", id);
-        var destination = fetchDestinationIfExist(id);
+        String cacheKeyReal = CACHE_KEY + "destination-id:" + id;
+
+        var cachedData = (DestinationCacheData) cacheServiceHandler.get(cacheKeyReal);
+
+        if (cachedData != null) {
+            return cachedData;
+        }
+
+        var data = fetchDestinationIfExist(id);
+        saveToCache(data);
+
         log.info("ActionLog.getCardById.success id: {}", id);
-        return toDestinationResponse(destination);
+        return toDestinationCacheData(data);
     }
 
     @Override
@@ -63,7 +75,6 @@ public class DestinationServiceHandler implements DestinationService {
         setTourToDestination(request, destination);
 
         log.info("ActionLog.createDestination.success destination: {}", destination);
-        destinationRepository.save(destination);
     }
 
     @Override
@@ -75,9 +86,9 @@ public class DestinationServiceHandler implements DestinationService {
 
         setTourToDestination(request, destination);
 
-        updateCache(id);
         destination.setTour(tourService.fetchTourIfExist(request.getTourId()));
         destinationRepository.save(destination);
+
         log.info("ActionLog.updateDestination.success id: {}", id);
     }
 
@@ -89,18 +100,6 @@ public class DestinationServiceHandler implements DestinationService {
         destination.setDestinationStatus(INACTIVE);
         log.info("ActionLog.deleteDestination.success id: {}", id);
         destinationRepository.save(destination);
-    }
-
-    @CacheEvict(allEntries = true, value = "destinations")
-    @Override
-    public void clearCache() {
-        log.info("ActionLog.clearCache.success");
-    }
-
-    @CachePut(value = "destinations")
-    public void updateCache(Long id){
-        log.info("ActionLog.updateCache.success id: {}", id);
-        getDestinationById(id);
     }
 
     @Override
@@ -116,11 +115,15 @@ public class DestinationServiceHandler implements DestinationService {
         return destination;
     }
 
+    private void saveToCache(DestinationEntity destination){
+        String cacheKeyReal = CACHE_KEY + "destination-id:" + destination.getId();
+        cacheServiceHandler.save(cacheKeyReal, toDestinationCacheData(destination));
+    }
+
     private void setTourToDestination(DestinationRequest request, DestinationEntity destination) {
         if (request.getTourId() != null){
             log.info("ActionLog.updateDestination.tourId: {}", request.getTourId());
             destination.setTour(tourService.fetchTourIfExist(request.getTourId()));
         }
     }
-
 }

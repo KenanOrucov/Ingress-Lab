@@ -2,6 +2,7 @@ package com.example.Ingress_lab.mapper;
 
 
 import com.example.Ingress_lab.dao.entity.DestinationEntity;
+import com.example.Ingress_lab.model.cache.DestinationCacheData;
 import com.example.Ingress_lab.model.request.DestinationRequest;
 import com.example.Ingress_lab.model.response.DestinationResponse;
 
@@ -46,6 +47,18 @@ public enum DestinationMapper {
         entity.setDescription(request.getDescription());
         entity.setVisitDate(request.getVisitDate());
         entity.setUpdatedAt(LocalDateTime.now());
+    }
+
+    public static DestinationCacheData toDestinationCacheData(DestinationEntity entity) {
+        return DestinationCacheData.builder()
+                .id(entity.getId())
+                .location(entity.getLocation())
+                .description(entity.getDescription())
+                .visitDate(entity.getVisitDate())
+                .destinationEntityStatus(entity.getDestinationStatus())
+                .createdAt(entity.getCreatedAt())
+                .updatedAt(entity.getUpdatedAt())
+                .build();
     }
 
 }

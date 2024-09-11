@@ -35,6 +35,13 @@ services:
     networks:
       - my_network
 
+  redis:
+    container_name: travel_tour
+    image: 'redis:latest'
+    ports:
+      - '6379:6379'
+    networks:
+      - my_network
 
 networks:
   my_network:

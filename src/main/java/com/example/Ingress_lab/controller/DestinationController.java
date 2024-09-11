@@ -1,5 +1,6 @@
 package com.example.Ingress_lab.controller;
 
+import com.example.Ingress_lab.model.cache.DestinationCacheData;
 import com.example.Ingress_lab.model.request.DestinationRequest;
 import com.example.Ingress_lab.model.response.DestinationResponse;
 import com.example.Ingress_lab.service.abstraction.DestinationService;
@@ -31,7 +32,7 @@ public class DestinationController {
     }
 
     @GetMapping("/{id}")
-    public DestinationResponse getDestinationById(@PathVariable Long id) {
+    public DestinationCacheData getDestinationById(@PathVariable Long id) {
         return destinationService.getDestinationById(id);
     }
 
