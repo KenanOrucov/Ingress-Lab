@@ -1,0 +1,9 @@
+ms-card:
+  client:
+    url: http://localhost:9090
+
+redis:
+  server:
+    urls: redis://localhost:6379
+
+
