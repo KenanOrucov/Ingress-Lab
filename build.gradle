@@ -24,24 +24,10 @@ repositories {
 dependencies {
 	//spring boot dependencies
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	//liquibase
-	implementation 'org.liquibase:liquibase-core'
-
-	//shedlock
-	implementation "net.javacrumbs.shedlock:shedlock-spring:${shedlockVersion}"
-	implementation "net.javacrumbs.shedlock:shedlock-provider-jdbc-template:${shedlockVersion}"
-
-	//feign
-	implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${openFeignVersion}"
-
-	//db
-	runtimeOnly 'org.postgresql:postgresql'
-
-	//redis
-	implementation "org.redisson:redisson:${redissonVersion}"
+	//rabbit mq
+	implementation "org.springframework.boot:spring-boot-starter-amqp"
 
 	//lombok
 	compileOnly 'org.projectlombok:lombok'
