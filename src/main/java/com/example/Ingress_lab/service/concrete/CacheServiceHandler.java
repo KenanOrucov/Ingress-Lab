@@ -14,8 +14,7 @@ import java.time.temporal.ChronoUnit;
 public class CacheServiceHandler<T> implements CacheService<T> {
     private final CacheUtil cacheUtil;
 
-    @Override
-    public void save(String cacheKey, T data) {
+    public <T> void save(T data, String cacheKey) {
         log.info("ActionLog.saveToCache.start {}", data);
         cacheUtil.saveToCache(cacheKey, data, 10L, ChronoUnit.MINUTES);
         log.info("ActionLog.saveToCache.success");

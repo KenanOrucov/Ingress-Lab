@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum ExceptionConstants {
+public enum ExceptionMessages {
     DESTINATION_NOT_FOUND("DESTINATION_NOT_FOUND", "Destination not found."),
     GUIDE_NOT_FOUND("GUIDE_NOT_FOUND", "Guide not found."),
     GUIDE_BUSY("GUIDE_BUSY", "Guide is busy."),

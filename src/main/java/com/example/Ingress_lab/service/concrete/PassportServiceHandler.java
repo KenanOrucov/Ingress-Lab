@@ -17,7 +17,7 @@ import static com.example.Ingress_lab.mapper.PassportMapper.toPassportEntity;
 import static com.example.Ingress_lab.mapper.PassportMapper.toPassportResponse;
 import static com.example.Ingress_lab.mapper.PassportMapper.toPassportResponses;
 import static com.example.Ingress_lab.mapper.PassportMapper.updatePassportEntity;
-import static com.example.Ingress_lab.model.enums.ExceptionConstants.PASSPORT_NOT_FOUND;
+import static com.example.Ingress_lab.model.enums.ExceptionMessages.PASSPORT_NOT_FOUND;
 import static com.example.Ingress_lab.model.enums.EntityStatus.ACTIVE;
 import static com.example.Ingress_lab.model.enums.EntityStatus.INACTIVE;
 

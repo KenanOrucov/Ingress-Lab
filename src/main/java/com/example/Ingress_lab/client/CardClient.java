@@ -5,7 +5,7 @@
 //import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.PathVariable;
 //
-//@FeignClient(name= "ms-card", url = "${ms-card.client.url}")
+//@FeignClient(name= "ms-card", url = "${client.ms-card.url}")
 //public interface CardClient {
 //
 //    @GetMapping("/internal/v1/cards/{id}")

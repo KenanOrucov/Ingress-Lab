@@ -35,13 +35,21 @@ dependencies {
 	implementation "net.javacrumbs.shedlock:shedlock-provider-jdbc-template:${shedlockVersion}"
 
 	//feign
-	implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${openFeignVersion}"
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
 
 	//db
 	runtimeOnly 'org.postgresql:postgresql'
 
+	implementation "com.nimbusds:nimbus-jose-jwt:${nimbusVersion}"
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+
 	//redis
 	implementation "org.redisson:redisson:${redissonVersion}"
+
+	//rabbit mq
+	implementation "org.springframework.boot:spring-boot-starter-amqp"
 
 	//lombok
 	compileOnly 'org.projectlombok:lombok'
@@ -49,6 +57,17 @@ dependencies {
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
+
+ext {
+	set('springCloudVersion', "2023.0.2")
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
 
 tasks.named('test') {
 	useJUnitPlatform()

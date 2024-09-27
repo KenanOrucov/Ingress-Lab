@@ -1,9 +1,16 @@
-ms-card:
-  client:
+client:
+  ms-card:
     url: http://localhost:9090
+  ms-permission:
+    url: http://localhost:8484
 
 redis:
   server:
     urls: redis://localhost:6379
+
+rabbitmq:
+  publisher-service:
+    queue: PUBLISHER_Q
+    dlq: PUBLISHER_DLQ
 
 

@@ -1,6 +1,6 @@
 package com.example.Ingress_lab.service.abstraction;
 
 public interface CacheService<T> {
-    void save(String cacheKey, T data);
+    public <T> void save(T data, String cacheKey);
     T get(String cacheKey);
 }

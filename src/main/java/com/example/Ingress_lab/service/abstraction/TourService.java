@@ -13,6 +13,7 @@ public interface TourService {
     List<TourResponse> getToursByTravelerId(Long travelerId);
     void createTour(TourRequest request);
     void updateTour(Long id, TourRequest request);
+    void updateTourStatus(Long id, String status);
     void deleteTour(Long id);
 
     void clearCache();

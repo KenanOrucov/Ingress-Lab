@@ -5,6 +5,7 @@ import com.example.Ingress_lab.dao.entity.TourEntity;
 import com.example.Ingress_lab.dao.repository.TourRepository;
 import com.example.Ingress_lab.exception.GuideBusyException;
 import com.example.Ingress_lab.exception.NotFoundException;
+import com.example.Ingress_lab.model.enums.EntityStatus;
 import com.example.Ingress_lab.model.request.TourRequest;
 import com.example.Ingress_lab.model.response.TourResponse;
 import com.example.Ingress_lab.service.abstraction.GuideService;
@@ -25,8 +26,8 @@ import static com.example.Ingress_lab.mapper.TourMapper.toTourEntity;
 import static com.example.Ingress_lab.mapper.TourMapper.toTourResponse;
 import static com.example.Ingress_lab.mapper.TourMapper.toTourResponses;
 import static com.example.Ingress_lab.mapper.TourMapper.updateTourEntity;
-import static com.example.Ingress_lab.model.enums.ExceptionConstants.GUIDE_BUSY;
-import static com.example.Ingress_lab.model.enums.ExceptionConstants.TOUR_NOT_FOUND;
+import static com.example.Ingress_lab.model.enums.ExceptionMessages.GUIDE_BUSY;
+import static com.example.Ingress_lab.model.enums.ExceptionMessages.TOUR_NOT_FOUND;
 import static com.example.Ingress_lab.model.enums.GuideStatus.BUSY;
 import static com.example.Ingress_lab.model.enums.EntityStatus.ACTIVE;
 import static com.example.Ingress_lab.model.enums.EntityStatus.INACTIVE;
@@ -87,6 +88,17 @@ public class TourServiceHandler implements TourService {
     }
 
     @Override
+    public void updateTourStatus(Long id, String status) {
+        log.info("ActionLog.updateTourStatus.start id: {}, status: {}", id, status);
+        var tour = tourRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException(TOUR_NOT_FOUND.getCode(), TOUR_NOT_FOUND.getMessage()));
+        tour.setTourStatus(EntityStatus.valueOf(status));
+        tourRepository.save(tour);
+        log.info("ActionLog.updateTourStatus.success id: {}", id);
+    }
+
+    @Override
     @Transactional
     public void deleteTour(Long id) {
         log.info("ActionLog.deleteTour.start id: {}", id);
@@ -119,6 +131,8 @@ public class TourServiceHandler implements TourService {
         }
         return tour;
     }
+
+
 
     private void setGuidesToTour(TourRequest request, TourEntity tour) {
         if (request.getGuideIds() != null){

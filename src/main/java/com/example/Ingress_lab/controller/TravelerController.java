@@ -1,21 +1,11 @@
 package com.example.Ingress_lab.controller;
 
-import com.example.Ingress_lab.model.request.DestinationRequest;
 import com.example.Ingress_lab.model.request.TravelerRequest;
-import com.example.Ingress_lab.model.response.DestinationResponse;
 import com.example.Ingress_lab.model.response.TravelerResponse;
-import com.example.Ingress_lab.service.abstraction.DestinationService;
 import com.example.Ingress_lab.service.abstraction.TravelerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,7 +35,8 @@ public class TravelerController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public void createTraveler(@RequestBody TravelerRequest request) {
+    @PreAuthorize("@permissionService.checkPermission(#userId, 'Travel-Tours', 'ADMIN')")
+    public void createTraveler(@RequestParam Long userId, @RequestBody TravelerRequest request) {
         travelerService.createTraveler(request);
     }
 

@@ -10,9 +10,6 @@ import com.example.Ingress_lab.service.abstraction.DestinationService;
 import com.example.Ingress_lab.service.abstraction.TourService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,11 +17,10 @@ import java.util.List;
 
 import static com.example.Ingress_lab.mapper.DestinationMapper.toDestinationCacheData;
 import static com.example.Ingress_lab.mapper.DestinationMapper.toDestinationEntity;
-import static com.example.Ingress_lab.mapper.DestinationMapper.toDestinationResponse;
 import static com.example.Ingress_lab.mapper.DestinationMapper.toDestinationResponses;
 import static com.example.Ingress_lab.mapper.DestinationMapper.updateDestinationEntity;
 import static com.example.Ingress_lab.model.enums.Constants.CACHE_KEY;
-import static com.example.Ingress_lab.model.enums.ExceptionConstants.DESTINATION_NOT_FOUND;
+import static com.example.Ingress_lab.model.enums.ExceptionMessages.DESTINATION_NOT_FOUND;
 import static com.example.Ingress_lab.model.enums.EntityStatus.ACTIVE;
 import static com.example.Ingress_lab.model.enums.EntityStatus.INACTIVE;
 
@@ -117,7 +113,7 @@ public class DestinationServiceHandler implements DestinationService {
 
     private void saveToCache(DestinationEntity destination){
         String cacheKeyReal = CACHE_KEY + "destination-id:" + destination.getId();
-        cacheServiceHandler.save(cacheKeyReal, toDestinationCacheData(destination));
+        cacheServiceHandler.save(toDestinationCacheData(destination), cacheKeyReal);
     }
 
     private void setTourToDestination(DestinationRequest request, DestinationEntity destination) {

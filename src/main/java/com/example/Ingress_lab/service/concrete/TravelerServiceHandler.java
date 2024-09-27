@@ -22,7 +22,7 @@ import static com.example.Ingress_lab.mapper.TravelerMapper.toTravelerEntity;
 import static com.example.Ingress_lab.mapper.TravelerMapper.toTravelerResponse;
 import static com.example.Ingress_lab.mapper.TravelerMapper.toTravelerResponses;
 import static com.example.Ingress_lab.mapper.TravelerMapper.updateTravelerEntity;
-import static com.example.Ingress_lab.model.enums.ExceptionConstants.TRAVELER_NOT_FOUND;
+import static com.example.Ingress_lab.model.enums.ExceptionMessages.TRAVELER_NOT_FOUND;
 import static com.example.Ingress_lab.model.enums.EntityStatus.ACTIVE;
 import static com.example.Ingress_lab.model.enums.EntityStatus.INACTIVE;
 
