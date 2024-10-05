@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/travel_tours
+    username: root
+    password: password
+  jpa:
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.yml
+  rabbitmq:
+    host: localhost
+    username: guest
+    password: guest
+    listener:
+      simple:
+        retry:
+          enabled: true
+          initial-interval: 3s
+          max-attempts: 5
+          max-interval: 5s
+          multiplier: 1
+        missing-queues-fatal: false
