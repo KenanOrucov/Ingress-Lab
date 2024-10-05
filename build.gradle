@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version "${springBootVersion}"
 	id 'io.spring.dependency-management' version "${springDependencyManagement}"
+	id 'groovy'
 }
 
 group = 'com.example'
@@ -40,10 +41,15 @@ dependencies {
 	//db
 	runtimeOnly 'org.postgresql:postgresql'
 
+	//security
 	implementation "com.nimbusds:nimbus-jose-jwt:${nimbusVersion}"
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
 
+	//unit test
+	implementation group: "org.apache.groovy", name: "groovy", version: "${groovyVersion}"
+	testImplementation group:"org.spockframework", name: "spock-spring", version: "${spockVersion}"
+	testImplementation "io.github.benas:random-beans:${randomBeansVersion}"
 
 	//redis
 	implementation "org.redisson:redisson:${redissonVersion}"

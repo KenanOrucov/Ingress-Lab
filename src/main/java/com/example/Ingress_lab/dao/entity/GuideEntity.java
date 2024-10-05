@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Builder;
 import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -29,6 +31,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @FieldNameConstants
 @Entity
 @Table(name = "guides")
+//@Where(clause = "status <> 'INACTIVE'")
+@SQLRestriction("status <> 'INACTIVE'")
 public class GuideEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -63,7 +67,7 @@ public class GuideEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GuideEntity that = (GuideEntity) o;
-        return id.equals(that.id);
+        return Objects.equals(id, that.id);
     }
 
     @Override

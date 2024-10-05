@@ -84,18 +84,18 @@ public class GuideServiceHandler implements GuideService {
         guideRepository.save(guide);
     }
 
-    @Override
-    public void updateGuide(Long id, GuideRequest request) {
-        log.info("ActionLog.updateGuide.start id: {}, request: {}", id, request);
-        var guide = fetchGuideIfExist(id);
+        @Override
+        public void updateGuide(Long id, GuideRequest request) {
+            log.info("ActionLog.updateGuide.start id: {}, request: {}", id, request);
+            var guide = fetchGuideIfExist(id);
 
-        updateGuideEntity(guide, request);
-        updatePassportEntity(guide.getPassport(), request.getPassport());
+            updateGuideEntity(guide, request);
+            updatePassportEntity(guide.getPassport(), request.getPassport());
 
-        updateCache(id);
-        guideRepository.save(guide);
-        log.info("ActionLog.updateGuide.success id: {}", id);
-    }
+//            updateCache(id);
+            guideRepository.save(guide);
+            log.info("ActionLog.updateGuide.success id: {}", id);
+        }
 
     @Override
     public void deleteGuide(Long id) {
@@ -128,7 +128,7 @@ public class GuideServiceHandler implements GuideService {
     }
 
     public GuideEntity fetchGuideIfExist(Long id) {
-        var guide = guideRepository
+        var guide =  guideRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(GUIDE_NOT_FOUND.getCode(), GUIDE_NOT_FOUND.getMessage()));
 
@@ -137,5 +137,4 @@ public class GuideServiceHandler implements GuideService {
         }
         return guide;
     }
-
 }
